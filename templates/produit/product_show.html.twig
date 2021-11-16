@@ -1,0 +1,201 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/product-show.css') }}" />
+{% endblock %}
+
+{% block title %} Produit-avis | PCG{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('panier') %}
+<div class="flash-background"></div>
+<div class="flash-message-panier">
+    <p>
+    {{ message }}
+    </p>
+    <a href="{{ path('cart') }}" class="flash-primary-button">Voir mon panier ></a>
+    <a href="{{ path('produits') }}"  class="flash-secondary-button">< Contiuer mes achats</a>
+</div>
+{% endfor %}
+
+<main>
+
+    {% for produit in produit %}
+
+        {# initialise mon tableau vide  #}
+        {% set note_array = [] %}
+
+        {# push chaque notes dans mon tableau de notes si l'avis est publié #}
+        {% for avis in produit.avis %}
+            {% if avis.published is same as true %}
+                {% set note_array = note_array|merge([avis.note]) %}
+            {% endif %}
+        {% endfor %}
+
+        {# si mon tableau est vide alors il n'ya pas laffichage ni le calcul de la moyenne  #}
+        {% if note_array | length is not same as 0 %}
+            {# calcule la moyenne de mes notes  #}
+            {% set moyenne = (note_array | reduce((sum, val) => sum + val, 0)) / (note_array | length) %}
+            {% set moyenne = moyenne | round(1) %}
+
+            {# je multiplie par 20 pour avoir la valeur en pourcentage  #}
+            {% set moyenne_pourcentage = moyenne * 20 %}
+        {% endif %}
+        
+    <article>
+        <img class="article-img" src="{{ asset('images/img-articles/' ~ produit.image) }}" alt="image indisponible">
+
+        <div class="article-content">
+
+            <h2>{{ produit.categorie.categorie }} - {{ produit.nom }}</h2>
+
+            {# si mon tableau est vide alors il n'ya pas laffichage ni le calcul de la moyenne  #}
+            {% if note_array | length is not same as 0 %}
+                <div class="note-wrapper">
+                    <svg viewBox="0 0 1000 200" class='rating'>
+                    <defs>
+                    
+                    <polygon id="star" points="100,0 131,66 200,76 150,128 162,200 100,166 38,200 50,128 0,76 69,66 "/>
+                
+                            <clipPath id="stars">
+                                <use xlink:href="#star"/>
+                                <use xlink:href="#star" x="20%"/>
+                                <use xlink:href="#star" x="40%"/>
+                                <use xlink:href="#star" x="60%"/>
+                                <use xlink:href="#star" x="80%"/>
+                            </clipPath>
+                
+                            </defs>
+                        
+                    <rect class='rating__background' clip-path="url(#stars)"></rect>
+                
+                    <!-- Change the width of this rect to change the rating -->
+                            <rect width=" {{ moyenne_pourcentage }}%" class='rating__value' clip-path="url(#stars)"></rect>
+                
+                    </svg>
+                    <p> ({{ note_array | length }} avis)</p>
+                </div>
+            {% endif %}
+        
+            <div>
+                {# "|raw" permet d'afficher les balises html contenues dans le texte #}
+                <div>
+                    {{ produit.description|raw }}
+                </div>
+                <p>Fournisseur : {{ produit.fournisseur.fournisseur }}</p>
+            </div>
+            {% if produit.quantitee > 0 %}
+            <p class="stock">
+                En stock
+            </p>
+            <h3>{{ produit.prix|number_format(2) }} €</h3>
+            <div class="button-wrap">
+                <img class="icone-panier" src="{{ asset('images/panier.svg') }}" alt="icone panier">
+                <span class="button">
+                    <a href=" {{ path('cart_add', {'id': produit.id}) }} ">Ajouter au panier</a>  
+                </span>
+            </div>
+            {% else %}
+            <p class="rupture-stock">
+                Article indisponible
+            </p>
+            <h3>{{ produit.prix|number_format(2) }} €</h3>
+            <div class="button-wrap">
+                <img class="icone-panier" src="{{ asset('images/panier.svg') }}" alt="icone panier">
+                <span>
+                    <a href="#" aria-disabled="true" class="no-cursor">
+                        Ajouter au panier
+                    </a>
+                </span>
+            </div>
+            {% endif %}
+        </div>
+    </article>
+    {% endfor %}
+
+    <div class="avis-portion">
+        <div class="form-background closed" id="form-bg"></div>
+        
+        <div class="avis-header">
+        <p>Avis {{ avis.getPaginationData.firstItemNumber }} à {{ avis.getPaginationData.lastItemNumber }} sur {{ avis.getTotalItemCount }}</p>
+      
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <span id="ecrire-avis">Ecrire un avis</span>
+
+            {% for produit in produit %}
+                <form action=" {{ path('avis', {id: produit.nom, categorie: categorie}) }} " method="POST" id="form-avis" class="closed">
+                    <input type="text" name="titre" id="titre" placeholder="Titre" required>
+                    <textarea name="commentaire" id="commentaire" cols="30" rows="10" placeholder="Commentaire" required></textarea>
+                    <label for="note">Note</label>
+                    <select name="note" id="note" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                    <input type="submit" value="Envoyer" class="form-button">
+                    <input type="hidden" name="username" value="{{ app.user.id }}">
+                    <input type="hidden" name="produit" value="{{ produit.id }}">
+                </form>
+            {% endfor %}
+
+        {% else %}
+            <span id="ecrire-avis" class="closed">Ecrire&nbsp;un&nbsp;avis</span>
+            <span id="open-pop-up">Ecrire&nbsp;un&nbsp;avis</span>
+
+            <div class="not-user-pop-up closed" id="pop-up">
+                <p>Il faut être authentifié pour écrire un avis</p>
+                <a href=" {{ path('app_login') }} ">Connexion</a>
+            </div>
+        {% endif %}
+        </div>
+
+        {% if avis.getTotalItemCount is same as 0 %}
+        
+            <p>Aucun avis pour cet article </p>
+
+        {% else %}
+
+            {% for avis in avis %}
+            <div class="avis-wrapper">
+                <div class="avis-container">
+                    <div class="prenom-wrap">
+                        <p>{{avis.user.nom}}</p>
+                    </div>
+
+                    <div class="avis">
+                        <div class="star-wrapper">
+                            {% for i in range(1, avis.note) %}
+                            <img src="{{ asset('images/star.svg') }}" alt="star icon" width="15px">
+                            {% endfor %}
+                            {% if avis.note < 5 %}
+                            {% for i in range(1, 5 - avis.note) %}
+                            <img src="{{ asset('images/empty-star.svg') }}" alt="star icon" width="15px">
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+                        
+                        <h3>{{avis.titre}}</h3>
+                        <p>{{avis.avis}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        {% endif %}
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(avis) }}
+            </div>
+    </div>
+
+</main>
+{% endblock %}
+        
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/product-show-avis.js') }}"></script>
+{% endblock %}

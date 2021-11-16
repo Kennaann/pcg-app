@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/panier.css') }}" />
+{% endblock %}
+
+
+{% block title %}Panier | PCG{% endblock %}
+
+{% block body %}
+<main>
+
+    {% if length > 0 %}
+
+        <div class="panier-wrapper">
+            <h1>PANIER ({{ length }} PRODUIT)</h1>
+
+            {% for item in item %}
+                <div class="panier-item">
+
+                    <img src="{{ asset('images/img-articles/' ~ item.product.image) }}" alt="image produit">
+
+                    <div class="article-info">
+                        <h2>{{ item.product.categorie.categorie }} - {{ item.product.nom }}</h2>
+                        <div class="article-description">
+                            {# "|raw" permet d'afficher les balises html contenues dans le texte #}
+                            <div>{{ item.product.description|raw }}</div>
+                            <p>Fournisseur : {{ item.product.fournisseur.fournisseur }}</p>
+
+                            <div class="description-overlay"></div>
+
+                        </div>
+                    </div>
+                    
+                    <div class="article-price">
+                        <p>{{ item.product.prix }} €</p>
+                        <p>Qte: {{ item.quantity }}</p>
+                        <a href="{{ path('cart_remove', {id: item.product.id}) }}">Supprimer cet article</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="recap-wrapper">
+            <h1>RECAPITULATIF</h1>
+
+            <div class="recap">
+                <div class="recap-ligne">
+                    <p>Panier ({{ length }})</p>
+                    <p> {{ total|number_format(2) }} €</p>
+                </div>
+                <div class="recap-ligne">
+                    <p>Frais de livraison</p>
+                    <p>Gratuit</p>
+                </div>
+                <div class="total-ligne">
+                    <p>TOTAL</p>
+                    <p> {{ total|number_format(2) }} €</p>
+                </div>
+                    <a href=" {{ path('checkout') }} " class="button">Valider mon panier</a>
+                
+            </div>
+        </div>
+
+    {% else %}
+
+    <div class="panier-vide">
+        <h1>Votre panier est vide</h1>
+        <a href="{{path('produits')}}" class="button center">Voir les produits</a>
+    </div>
+
+    {% endif %}
+
+    
+</main>
+
+{% endblock %}

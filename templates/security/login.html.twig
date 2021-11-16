@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/form.css') }}" />
+{% endblock %}
+
+{% block title %} Connexion | PCG{% endblock %}
+
+{% block body %} 
+
+<div class="form-container">
+    
+    {% if app.user %}
+        <div class="">
+            Vous êtes déja connecté avec le compte {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </div>
+    {% endif %}
+
+    <form method="post">
+        {% if error %}
+            <div class="">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" placeholder="Votre adresse email" required autofocus>
+        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" placeholder="Votre mot de passe" required>
+
+        <input type="hidden" name="_csrf_token"
+            value="{{ csrf_token('authenticate') }}"
+        >
+
+
+        <button class="form-button" type="submit">
+            Connexion
+        </button>
+    </form>
+    <p>
+        Vous n'avez pas de compte ?
+        <a href="{{ path('app_inscription') }}">Inscrivez vous ici</a>
+    </p>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/accueil.css') }}" />
+{% endblock %}
+
+{% block title %}Accueil | PCG{% endblock %}
+
+{% block body %}
+
+<main>
+    {% if produit_phare %}
+    <section class="produit-phare">
+        <img src="{{ asset('images/img-articles/' ~ produit_phare.image) }}" alt="mon produit phare" class="produit-phare-img"> 
+        <article class="produit-phare-txt">
+            <h1>{{ produit_phare.nom }}</h1>
+            <div class="description">
+                {# "|raw" permet d'afficher les balises html contenues dans le texte #}
+                {{ produit_phare.description|raw }}
+            </div>
+            <h2> {{ produit_phare.prix }} €</h2>
+            <a href="{{ path('product_show', {id:produit_phare.nom, categorie: produit_phare.categorie.categorie|lower}) }}">Consulter</a>
+        </article>
+    </section>
+    {% else %}
+    <div class="no-product">
+        <h1>Aucun produit à afficher !</h1>
+        <p>
+            Il vous faut au moins un produit en vente qui  puisse être affiché en page d'accueil
+        </p>
+    </div>  
+    {% endif %}
+    
+</main>
+
+{% endblock %}

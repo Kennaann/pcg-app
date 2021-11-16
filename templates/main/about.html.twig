@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/about.css') }}" />
+{% endblock %}
+
+{% block title %}A propos | PCG{% endblock %}
+
+{% block body %}
+
+<main>
+    <section>
+        <div class="overlay"></div>
+        <article>
+            <h1>&Agrave; propos</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae quae eum consectetur obcaecati deleniti porro consequatur necessitatibus perferendis tempora eos qui error ullam expedita temporibus, corporis dicta accusantium quibusdam velit.</p>
+            <a href=" {{ path('produits') }} ">< Nos produits</a>
+        </article>
+        <img src="{{ asset('images/technicien.jpg') }}" alt="technicien">
+    </section>
+</main>
+
+{% endblock %}

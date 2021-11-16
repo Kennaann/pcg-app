@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/product.css') }}" />
+{% endblock %}
+
+{% block title %} Produits | PCG{% endblock %}
+
+{% block body %}
+
+<main>
+    <section>
+        <div class="grid">
+            {% for categorie in categories %}
+            <article>
+
+                {% if categorie.image %}
+                    <img src="{{ asset('images/img-categories/' ~ categorie.image) }}" alt="image indisponible">
+                {% else %}
+                    <img src="{{ asset('images/img-categories/indisponible.png') }}" alt="image indisponible">
+                {% endif %}
+                
+                <div class="article-text">
+                    <h2>{{ categorie.categorie }}</h2>
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia explicabo laboriosam sequi et consectetur</p>
+                    <span class="button">
+                        <a href="{{ path('par_categories', {id: categorie.categorie|lower}) }}">
+                            Voir les produits >
+                        </a>
+                    </span>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+{% endblock %}

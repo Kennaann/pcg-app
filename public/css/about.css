@@ -1,0 +1,56 @@
+section img {
+    width: 100%;
+}
+
+section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0,0,0,0.75);
+}
+
+article {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px 0;
+}
+
+article p {
+    text-align: center;
+    width: 70%;
+    font-weight: lighter;
+}
+
+article h1 {
+    font-weight: lighter;
+    font-size: 2em;
+    text-transform: uppercase;
+    color: var(--article-color);
+    margin: 10px 0;
+}
+
+article a {
+    text-decoration: none;
+    color: var(--main-color);
+    font-weight: bold;
+}
+
+@media screen and (max-width: 850px) {
+
+    article p {
+        width: 90%;
+    }
+
+    section img {
+        height: 75vh;
+    }
+}

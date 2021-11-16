@@ -1,0 +1,112 @@
+section img {
+    width: 100%;
+}
+
+article {
+    width: 20%;
+    font-weight: lighter;
+    color: var(--secondary-text-color);
+    line-height: 1.25;
+}
+
+article > h1 {
+    font-weight: normal;
+    font-size: 1.5rem;
+    color: var(--main-text-color);
+}
+
+article > h2 {
+    font-weight: lighter;
+    color: var(--main-text-color);
+}
+
+article > h1, h2, p, ul {
+    margin: 5px 0;
+}
+
+article ul {
+    padding: 5px 16px;
+}
+
+article a {
+    text-decoration: none;
+    text-align: center;
+    font-weight: bolder;
+    color: white;
+    background-color: var(--main-color);
+    padding: 20px 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+article a:hover, 
+article a:focus {
+    background-color: #c265e7;
+    transition: ease .2s;
+}
+
+.produit-phare {
+    position: relative;
+}
+
+.produit-phare-txt {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 5%;
+    padding-left: 20%;
+    background: linear-gradient(270deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+
+}
+
+.no-product {
+    width: fit-content;
+    margin: auto;
+    margin-top: 25%;
+    margin-bottom: 25%;
+}
+
+@media screen and (max-width: 1200px) {
+    article {
+        width: 30%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .produit-phare-txt, .produit-phare {
+        position: static;
+        background: none;
+        padding: 0;
+        width: 100%;
+    }
+
+    section {
+        margin-bottom: 100px;
+    }
+
+    article {
+        margin: 10px 0;
+    }
+
+    article > h1, h2, p {
+        margin: 5px 5px;
+    }
+    
+    article a {
+        margin: 5px;
+    }
+
+    .description {
+        margin: 0 5px;
+    }
+
+    .produit-phare img {
+        width: -webkit-fill-available;
+        margin: 0 5px;
+    }
+
+}

@@ -1,0 +1,144 @@
+main {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 50px;
+    min-height: 70vh;
+}
+p, h2 {
+    margin: 5px 0;
+}
+
+h1, h2 {
+    font-weight: lighter;
+}
+
+.panier-vide {
+    margin: 15% auto;
+    height: 40vh;
+    width: 50vw;
+    background-color: var(--article-background-color);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* articles du panier  */
+.panier-item {
+    display: flex;
+    height: fit-content;
+    background-color: var(--article-background-color);
+    padding: 20px;
+    border-radius: 5px;
+    width: 650px;
+    margin: 20px 0;
+}
+
+.panier-item img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+}
+
+.article-info {
+    margin: 0 20px;
+}
+
+.article-description {
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+}
+
+.description-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(42,42,42,1) 0%, rgba(42,42,42,0) 40%);
+}
+
+.article-description div,
+.article-description p {
+    color: var(--secondary-text-color);
+}
+
+.article-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.article-price a {
+    text-decoration: none;
+    color: white;
+    margin-top: auto;
+    width: max-content;
+}
+
+.article-price a:hover {
+    text-decoration: underline;
+}
+
+/* recapitulatif de commande  */
+
+.recap {
+    padding: 20px;
+    background-color: var(--article-background-color);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.recap-ligne {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px white dotted;
+}
+
+.total-ligne {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.button {
+    text-decoration: none;
+    color: white;
+    padding: 15px 10px;
+    background-color: var(--main-color);
+    border-radius: 5px;
+    text-align: center;
+    border: none;
+}
+
+.button:hover {
+    background-color: #b852e0;
+}
+
+@media screen and (max-width: 1000px) {
+    main {
+        flex-direction: column;
+        padding: 0 20px;
+    }
+
+    .panier-item {
+        width: auto;
+    }
+
+    .button {
+        width: fit-content;
+        margin-left: auto;
+    }
+
+    .center {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .panier-vide {
+        width: auto;
+        margin: 25% 20px;
+    }
+}

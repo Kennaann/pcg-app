@@ -1,0 +1,227 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/par-categories.css') }}" />
+{% endblock %}
+
+{% block title %} Produits - {{ categorie_id|upper }} | PCG{% endblock %}
+
+{% block body %}
+
+{% for message in app.flashes('panier') %}
+<div class="flash-background"></div>
+<div class="flash-message-panier">
+    <p>
+    {{ message }}
+    </p>
+    <a href="{{ path('cart') }}" class="flash-primary-button">Voir mon panier ></a>
+    <a href="" class="flash-secondary-button">< Contiuer mes achats</a>
+</div>
+{% endfor %}
+
+<main>
+    <div class="filter-wrap">
+        <h1 id="filter-title" class="filter-title">Filtrer</h1>
+        <form method="get" action="{{ path('produits_filter', {id: categorie_id}) }}" id="filter-form" class="form-hidden">
+            <div class="formulaire">
+                <h2>Fournisseurs</h2>
+                {% for fournisseur in fournisseurs %}
+                <input type="checkbox" name="fournisseur[]" value="{{ fournisseur.fournisseur|lower }}">{{ fournisseur.fournisseur }}<br>
+                {% endfor %}
+            </div>
+            
+            <div class="formulaire">
+                <label for="prix">Prix</label> 
+                <div class="prix-wrap">
+                    <span>5 €</span> <input type="range" id="prix" name="prix" min="5" max="100" value="{{ filter_prix }}"> <span>100 €</span>
+                </div>
+                <p class="prix-dynamique"></p>
+            </div>
+
+            <button class="form-button">Activer les filtres</button>
+        </form>
+    </div>
+    <div class="produits-wrap">
+        <div class="produit-header">
+            {# total items count #}
+            <div class="count">
+                <p>
+                    Résultats {{ produits.getPaginationData.firstItemNumber }} à {{ produits.getPaginationData.lastItemNumber }} sur {{ produits.getTotalItemCount }}
+                </p>
+            </div>
+
+            <div class="menu-deroulant">
+                <span>Trier par :</span>
+                <div class="tri-button">
+                    <ul>
+                        {# Affiche en premier l'option de tri séléctioné précédemment, par défaut affiche la première option de tri disponible #}
+
+                        {% if app.request.query.get('sort') is same as "p.nom" %}
+                            <li class="li">
+                                Ordre alphabétique
+                            </li>
+
+                        {% elseif app.request.query.get('sort') is same as "p.prix" and app.request.query.get('direction') is same as "asc" %}
+                            <li class="li">
+                                Prix croissant
+                            </li>
+
+                        {% elseif app.request.query.get('sort') is same as "p.prix" and app.request.query.get('direction') is same as "desc" %}
+                            <li class="li">
+                                Prix décroissant
+                            </li>
+
+                        {% else %}
+                        <li class="li">
+                            Ordre alaphabétique
+                        </li>
+
+                        {% endif %}
+
+                        {# affiche le reste des option de tri #}
+
+                        {% if app.request.query.get('sort') is same as "p.nom" or not app.request.query.get('sort') %}
+                        {% else %}
+                            <li class="li-hidden">
+                                {{ knp_pagination_sortable(produits, 'Ordre alphabétique', 'p.nom', {'direction': 'asc'}) }}
+                            </li>
+                        {% endif %}
+                        
+                        
+                        {% if app.request.query.get('sort') is same as "p.prix" and app.request.query.get('direction') is same as "asc" %}
+                        {% else %}
+                            <li class="li li-hidden">
+                                {{ knp_pagination_sortable(produits, 'Prix croissant', 'p.prix', {'direction': 'asc'}) }}
+                            </li>
+                        {% endif %}
+                        
+                        {% if app.request.query.get('sort') is same as "p.prix" and app.request.query.get('direction') is same as "desc" %}
+                        {% else %}
+                            <li class="li li-hidden">
+                                {{ knp_pagination_sortable(produits, 'Prix décroissant', 'p.prix', {'direction': 'desc'}) }}
+                            </li>
+                        {% endif %}
+                    </ul>
+                    <img class="arrow" src="{{ asset('images/menu-deroulant.svg') }}" alt="icone menu deroulant">
+                </div>
+            </div>
+        </div>
+        
+        {% if produits.getTotalItemCount is same as 0 %}
+        
+        <p>Pas de produit disponible</p>
+
+        {% else %}
+        
+            <div class="produit-container">
+                <div class="produits">
+                {% for produit in produits %}
+                    {# initialise mon tableau vide  #}
+                    {% set note_array = [] %}
+
+                    {# push chaque notes dans mon tableau de notes si l'avis est publié #}
+                    {% for avis in produit.avis %}
+                        {% if avis.published is same as true %}
+                            {% set note_array = note_array|merge([avis.note]) %}
+                        {% endif %}
+                    {% endfor %}
+                    {# si mon tableau est vide alors il n'ya pas laffichage ni le calcul de la moyenne  #}
+                    {% if note_array | length is not same as 0 %}
+                        {# calcule la moyenne de mes notes  #}
+                        {% set moyenne = (note_array | reduce((sum, val) => sum + val, 0)) / (note_array | length) %}
+                        {% set moyenne = moyenne | round(1) %}
+
+                        {# je multiplie par 20 pour avoir la valeur en pourcentage  #}
+                        {% set moyenne_pourcentage = moyenne * 20 %}
+                    {% endif %}
+
+                <article>
+                    <a href="{{ path('product_show', {id: produit.nom, categorie: categorie_id}) }}" class="article-link">
+                        <img class="article-img" src="{{ asset('images/img-articles/' ~ produit.image) }}" alt="image indisponible">
+                        <h2>{{ produit.categorie.categorie }} - {{ produit.nom }}</h2>
+                    </a>
+
+                    {# si mon tableau est vide alors il n'ya pas laffichage ni le calcul de la moyenne  #}
+                    {% if note_array | length is not same as 0 %}
+                        <div class="note-wrapper">
+                            <svg viewBox="0 0 1000 200" class='rating'>
+                            <defs>
+                            
+                            <polygon id="star" points="100,0 131,66 200,76 150,128 162,200 100,166 38,200 50,128 0,76 69,66 "/>
+                        
+                                    <clipPath id="stars">
+                                        <use xlink:href="#star"/>
+                                        <use xlink:href="#star" x="20%"/>
+                                        <use xlink:href="#star" x="40%"/>
+                                        <use xlink:href="#star" x="60%"/>
+                                        <use xlink:href="#star" x="80%"/>
+                                    </clipPath>
+                        
+                                    </defs>
+                                
+                            <rect class='rating__background' clip-path="url(#stars)"></rect>
+                        
+                            <!-- Change the width of this rect to change the rating -->
+                                    <rect width=" {{ moyenne_pourcentage }}%" class='rating__value' clip-path="url(#stars)"></rect>
+                        
+                            </svg>
+                            <p> ({{ note_array | length }} avis)</p>
+                        </div>
+                    {% endif %}
+                
+                    <div class="article-description">
+                        {# "|raw" permet d'afficher les balises html contenues dans le texte #}
+                        <div>
+                            {{ produit.description|raw }}
+                        </div>
+                        <p>Fournisseur : {{ produit.fournisseur.fournisseur }}</p>
+
+                        <div class="description-overlay"> </div>
+                    </div>
+
+
+                    {% if produit.quantitee > 0 %}
+                    <p class="stock">
+                        En stock
+                    </p>
+                    <h3>{{ produit.prix|number_format(2) }} €</h3>
+                    <div class="button-wrap">
+                        <img class="icone-panier" src="{{ asset('images/panier.svg') }}" alt="icone panier">
+                        <span class="button">
+                            <a href=" {{ path('cart_add', {'id': produit.id}) }} ">Ajouter au panier</a> 
+                        </span>
+                    </div>
+                    {% else %}
+                    <p class="rupture-stock">
+                        Article indisponible
+                    </p>
+                    <h3>{{ produit.prix|number_format(2) }} €</h3>
+                    <div class="button-wrap">
+                        <img class="icone-panier" src="{{ asset('images/panier.svg') }}" alt="icone panier">
+                        <span>
+                            <a href="#" aria-disabled="true" class="no-cursor">
+                                Ajouter au panier
+                            </a>
+                        </span>
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+                </div>
+            </div>
+            
+        {% endif %}
+    </div>
+</main>
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/produits-liste.js') }}"></script>
+{% endblock %}
+
+{# display navigation #}
+<div class="navigation">
+    {{ knp_pagination_render(produits) }}
+</div>
+{% endblock %}

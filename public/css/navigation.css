@@ -1,0 +1,208 @@
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/*menu sur desktop*/
+
+
+.desk-nav {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.desk-ul {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.desk-li {
+    margin: auto 0;
+}
+
+.desk-li > a {
+    text-decoration: none;
+    color: var(--secondary-text-color);
+    font-weight: bold;
+    padding: 40px 20px;
+}
+
+.desk-nav .active > a {
+    color: var(--main-text-color);
+}
+
+.desk-li > a:hover, 
+.desk-li > a:focus {
+    color: var(--main-text-color);
+}
+
+
+ /* Sous menu  */
+
+
+.under-ul {
+    position: absolute;
+    top: 100px;
+    margin: 0;
+    padding: 0;
+    width: max-content;
+    background-color: var(--background-color);
+    z-index: 20;
+    display: none;
+    transition-delay: .2s;
+ }
+
+ .under-overlay {
+    position: absolute;
+    top: 100px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--overlay-color);
+    z-index: 10;
+    display: none;
+ }
+
+.under-ul li {
+    list-style: none;
+    padding: 20px;
+    width: 100px;
+}
+
+.under-ul li > a {
+    text-decoration: none;
+    color: var(--secondary-text-color);
+}
+
+.li-deroulant:hover > .under-ul {
+    display: block;
+}
+
+
+.li-deroulant:hover ~ .under-overlay {
+    display: block;
+}
+
+.under-ul li:hover {
+    background-color: #1b1b1b;
+}
+
+.under-ul li:hover > a {
+    color: var(--main-text-color);
+}
+
+.user-wrap {
+    padding: 36px;
+    display: flex;
+    align-items: center;
+}
+
+.user-wrap span {
+    color: var(--main-text-color);
+    margin-left: 5px;
+}
+
+.user-li {
+    position: absolute;
+    top: 0;
+    right: 60px;
+}
+
+/*menu sur mobile*/
+
+.hamburger {
+    padding: 20px;
+    cursor: pointer;
+    display: none;
+}
+
+.mobile-nav {
+    position: fixed;
+    z-index: 10;
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background-color: var(--background-color);
+    transform: translateX(-100%);
+    transition: all ease .5s;
+    font-size: larger;
+}
+
+.nav-overlay {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background: var(--overlay-color);
+    z-index: -10;
+
+    opacity: 0;
+    transition: opacity .5s ease;
+}
+
+.nav-overlay.open {
+    opacity: 1;
+    z-index: 1;
+}
+
+.mobile-nav.open {
+    transform: translateX(0);
+}
+
+.mobile-list,
+.user-list ul {
+    padding: 10px;
+    list-style: none;
+}
+
+.mobile-list li {
+    display: flex;
+}
+
+
+.mobile-nav li a, 
+.user-list li a {
+    text-decoration: none;
+    color: rgb(194, 193, 193);
+    padding: 5px;
+}
+
+
+.user-list li {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.mobile-nav .user-wrap {
+    padding: 10px;
+}
+
+hr {
+    width: 95%;
+    margin: 0 auto;
+    height: 0.01em;
+    border-width: 0;
+    background-color: rgb(102, 102, 102);
+}
+
+@media screen and (max-width: 850px) {
+    .desk-nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}

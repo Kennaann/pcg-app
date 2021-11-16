@@ -1,0 +1,64 @@
+{# @var ea \EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+
+{% block main %}
+<h1>Bienvenue dans l'interface administration de votre site internet</h1>
+<p>
+  C'est ici que vous allez pouvoir créer ou éditer vos produits, catégories etc. <br> 
+  Vous pouvez aussi décider de publier ou non les avis des utilisateurs, <strong>jettez-y régulièrement un coup d'oeil !</strong> <br> <br>
+  Note : Il ne peut y avoir qu'un seul produit "phare". <br>
+  Si il y n'y en a aucun, le premier article de la table produit sera affiché. <br>
+  Si il y a plusieurs produits "phare", le premier produit par ordre d'ID sera affiché. <br>
+  Si aucun produit n'est mis en vente dans votre site, votre page d'accueil sera vide.  
+</p>
+
+<div class="row">
+
+  <div class="col-sm-4 mt-3">
+    <div class="card">
+      <div class="card-header text-center">Avis</div>
+      <div class="card-body">
+        <h1 class="card-title display-6 text-center"> {{ nb_avis }} </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 mt-3">
+    <div class="card">
+      <div class="card-header text-center">Produits</div>
+      <div class="card-body">
+        <h1 class="card-title display-6 text-center"> {{ nb_produit }} </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 mt-3">
+    <div class="card">
+      <div class="card-header text-center">Categories</div>
+      <div class="card-body">
+        <h1 class="card-title display-6 text-center"> {{ nb_categorie }} </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 mt-3">
+    <div class="card">
+      <div class="card-header text-center">Fournisseurs</div>
+      <div class="card-body">
+        <h1 class="card-title display-6 text-center"> {{ nb_fournisseur }} </h1>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-4 mt-3">
+    <div class="card">
+      <div class="card-header text-center">Urilisateurs</div>
+      <div class="card-body">
+        <h1 class="card-title display-6 text-center"> {{ nb_user }} </h1>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

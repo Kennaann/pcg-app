@@ -1,0 +1,168 @@
+
+    <nav class="mobile-nav">
+
+        {% if not app.user %}
+
+        <div class="user-list">
+            <div class="user-wrap">
+                <img class="user" src="{{ asset('images/user.svg') }}" alt="user">
+            </div>
+
+            <ul>
+                <li>
+                    <a href="{{ path('app_login') }}">Connexion</a>
+                </li>
+                <li>
+                    <a href="{{ path('app_inscription') }}">inscription</a>
+                </li>
+            </ul>
+
+        </div>
+
+        {% elseif is_granted('ROLE_ADMIN') %}
+
+        <div class="user-list">
+            <div class="user-wrap">
+                <img class="user" src="{{ asset('images/user.svg') }}" alt="user">
+                <span> {{ app.user.nom }}</span>
+            </div>
+        
+        
+            <ul>
+                <li>
+                    <a href="{{  path('app_logout') }}">Déconnexion</a>
+                </li>
+                <li>
+                    <a href="{{  path('app_inscription') }}">Inscription</a>
+                </li>
+                <li>
+                    <a href="/admin">Dashboard</a>
+                </li>
+            </ul>
+        </div>
+
+        {% else %}
+                
+        <div class="user-list">
+            <div class="user-wrap">
+                <img class="user" src="{{ asset('images/user.svg') }}" alt="user">
+                <span> {{ app.user.nom }}</span>
+            </div>
+            <ul>
+                <li>
+                    <a href="{{  path('app_logout') }}">Déconnexion</a>
+                </li>
+                <li>
+                    <a href="{{  path('app_inscription') }}">Inscription</a>
+                </li>
+            </ul>
+        </div>
+        
+        {% endif %}
+
+        <hr>
+    
+        <ul class="mobile-list">
+            <li><a href=" {{ path('home_page') }} ">Accueil</a></li>
+            <li><a href=" {{ path('produits') }} ">Nos produits</a></li>
+            <li><a href="{{ path('about') }}">&Agrave; propos</a></li>
+        </ul>
+
+        <div class="under-overlay"></div>
+    </nav>
+    
+    <div class="nav-overlay" >
+    </div>   
+    
+    <header>
+        <img class="hamburger" src="{{ asset('images/hamburger.svg') }}" alt="icone hamburger">
+        <a href="{{ path('home_page') }}">
+            <img class="logo" src="{{ asset('images/logo.svg') }}" alt="mon logo">
+        </a>
+        <nav class="desk-nav">
+
+            <ul class="desk-ul">
+                <li class="desk-li" id="acceuil">
+                    <a href="{{ path('home_page') }}">Accueil</a>
+                </li>
+
+                <li class="desk-li li-deroulant">
+                    <a href=" {{ path('produits') }} ">Nos produits</a>
+                    <ul class="under-ul">
+                        {% for categorie in app.session.get('categories') %}
+                        <li><a href=" {{ path('par_categories', {id: categorie.categorie|lower}) }} ">{{ categorie.categorie }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+
+                <li class="desk-li">
+                    <a href="{{ path('about') }}">&Agrave; propos</a>
+                </li>
+                    
+                {% if not app.user %}
+
+                <li class="desk-li li-deroulant user-li user-li">
+                    <div class="user-wrap">
+                        <img class="user" src="{{ asset('images/user.svg') }}" alt="user">
+                    </div>
+
+                    <ul class="under-ul">
+                        <li>
+                            <a href="{{ path('app_login') }}">Connexion</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_inscription') }}">Inscription</a>
+                        </li>
+                    </ul>
+
+                </li>
+
+                {% elseif is_granted('ROLE_ADMIN') %}
+
+                <li class="desk-li li-deroulant user-li">
+                    <div class="user-wrap">
+                        <img class="user" src="{{ asset('images/user.svg') }}" alt="user">
+                        <span> {{ app.user.nom }}</span>
+                    </div>
+                
+                
+                    <ul class="under-ul">
+                        <li>
+                            <a href="{{  path('app_logout') }}">Déconnexion</a>
+                        </li>
+                        <li>
+                            <a href="{{  path('app_inscription') }}">Inscription</a>
+                        </li>
+                        <li>
+                            <a href="/admin">Dashboard</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {% else %}
+                        
+                    <li class="desk-li li-deroulant user-li">
+                        <div class="user-wrap">
+                            <img class="user" src="{{ asset('images/user.svg') }}" alt="user">
+                            <span> {{ app.user.nom }}</span>
+                        </div>
+                        <ul class="under-ul">
+                            <li>
+                                <a href="{{  path('app_logout') }}">Déconnexion</a>
+                            </li>
+                            <li>
+                                <a href="{{  path('app_inscription') }}">Inscription</a>
+                            </li>
+                        </ul>
+                    </li>
+                    
+                    {% endif %}
+               
+                <div class="under-overlay"></div>
+            </ul>
+            
+        </nav>
+        <a href="{{ path('cart') }}">
+            <img class="panier" src="{{ asset('images/panier.svg') }}" alt="logo d'un panier">
+        </a>
+    </header>
