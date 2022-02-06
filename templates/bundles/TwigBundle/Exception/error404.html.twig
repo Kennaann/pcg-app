@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Erreur 404
+{% endblock %}
+
+{% block body %}
+
+<body>
+    <div class="message">
+        <div class="text">            
+            <h1>Page indisponible</h1>
+            <p>La page que vous cherchez n'est pas disponible</p>
+        </div>
+
+        <img src="{{ asset('images/error/erreur404.svg') }}" alt="Erreur 404">
+    </div>
+</body>
+{% endblock %}

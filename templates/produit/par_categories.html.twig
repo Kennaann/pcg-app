@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/by-categories.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/produits/liste-produits.css') }}" />
 {% endblock %}
 
 {% block title %} Produits - {{ categorie_id|upper }} | PCG{% endblock %}
@@ -109,9 +109,14 @@
         </div>
         
         {% if produits.getTotalItemCount is same as 0 %}
-        
-        <p>Pas de produit disponible</p>
 
+            <div class="no-result">
+                <img src="{{ asset('images/no-result.svg') }}" alt="Pas de résultat">
+                <div class="text">
+                    <h1>Oops !</h1>
+                    <p>Pas de produit disponible</p>
+                </div>
+            </div>
         {% else %}
         
             <div class="produits">

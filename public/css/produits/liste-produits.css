@@ -77,6 +77,28 @@ main {
 
 /* articles */
 
+/* Pas de resultat */
+
+.no-result {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap-reverse;
+}
+
+.no-result img {
+    width: 45%;
+    min-width: 400px;
+}
+
+.no-result .text {
+    margin-top: 50px;
+}
+
+.text h1 {
+    text-align: center;
+}
+
 
 /* partie notation en etoile du produit  */
 

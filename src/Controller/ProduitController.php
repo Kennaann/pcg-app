@@ -43,6 +43,9 @@ class ProduitController extends AbstractController
     #[Route('/produits/{id}', name: 'par_categories')]
     public function produitsParCategories($id, Request $request)
     {
+
+        $fournisseurs = $this->em->getRepository(Fournisseur::class)->findAll();
+
         // requete vers la BDD
         $all_produits = $this->em->createQuery(
             'SELECT p
@@ -52,13 +55,17 @@ class ProduitController extends AbstractController
         )
         ->setParameters(['id_cat'=> $id]);
 
-        $fournisseurs = $this->em->getRepository(Fournisseur::class)->findAll();
-
+        // paginator va executer la requête et afficher le résultat 
         $produits = $this->paginator->paginate(
             $all_produits,
             $request->query->getInt('page', 1),
             8
         );
+
+        // si ma requête ne renvoie aucun résultats c'est que l'ID passé en url est invalide
+        if(empty($produits->getItems())) {
+            throw $this->createNotFoundException();
+        }
 
         return $this->render('produit/par_categories.html.twig', [
             'produits' => $produits,
@@ -127,6 +134,7 @@ class ProduitController extends AbstractController
     public function productShow(Request $request, $id, $categorie, AvisRepository $avis_repo) 
     {
         $produit = $this->em->getRepository(Produit::class)->findBy(array("nom" => $id));
+
         $all_avis = $avis_repo->findByProductAndPublished($id);
 
         $avis = $this->paginator->paginate(
@@ -134,6 +142,13 @@ class ProduitController extends AbstractController
             $request->query->getInt('page', 1),
             4
         );
+
+        
+        
+        // si ma requête ne renvoie aucun résultats c'est que le produit n'existe pas 
+        if(!$produit) {
+            throw $this->createNotFoundException();
+        }
         
         return $this->render('produit/product_show.html.twig', [
             'produit' => $produit,

@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Erreur 500
+{% endblock %}
+
+{% block body %}
+
+<body>
+    <div class="message">
+        <div class="text">            
+            <h1>Page indisponible</h1>
+            <p>Erreur du serveur interne</p>
+        </div>
+
+        <img src="{{ asset('images/error/500.svg') }}" alt="Erreur 500">
+    </div>
+</body>
+{% endblock %}

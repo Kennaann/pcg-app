@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/cart.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/panier/panier.css') }}" />
 {% endblock %}
 
 
@@ -66,8 +66,11 @@
     {% else %}
 
     <div class="panier-vide">
-        <h1>Votre panier est vide</h1>
-        <a href="{{path('produits')}}" class="button center">Voir les produits</a>
+        {# <img src="{{ asset('images/panier.svg') }}" alt="panier vide"> #}
+        <div class="text">
+            <h1>Votre panier est vide</h1>
+            <a href="{{path('produits')}}" class="button center">Voir les produits</a>
+        </div>
     </div>
 
     {% endif %}

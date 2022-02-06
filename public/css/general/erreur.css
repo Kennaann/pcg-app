@@ -1,0 +1,25 @@
+.message {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    min-height: 70vh;
+}
+
+
+.message img {
+    width: 40%;
+    min-width: 450px;
+    margin-right: 30px;
+}
+
+.text {
+    height: fit-content;
+    margin: 20px;
+}
+
+.text h1 {
+    font-size: 2em;
+    font-weight: lighter;
+}

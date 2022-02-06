@@ -2,11 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        
         <title>{% block title %}Welcome!{% endblock %}</title>
 
+
         {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/menu.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/general/main.css') }}" />
+            <link rel="stylesheet" href="{{ asset('css/general/menu.css') }}" />
+            <link rel="stylesheet" href="{{asset('css/general/erreur.css') }}">
         {% endblock %}
 
     </head>

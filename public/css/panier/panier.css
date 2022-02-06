@@ -13,15 +13,22 @@ h1, h2 {
 }
 
 .panier-vide {
-    margin: 15% auto;
+    display: flex;
+}
+
+.text {
+    margin: auto;
     height: 40vh;
     width: 50vw;
-    background-color: var(--article-background-color);
     border-radius: 5px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.text h1 {
+    text-align: center;
 }
 
 /* articles du panier  */
@@ -141,10 +148,6 @@ h1, h2 {
 }
 
 @media screen and (max-width: 850px) {
-    .panier-vide {
-        width: auto;
-        margin: 25% 20px;
-    }
 }
 
 @media screen and (max-width: 520px) {
