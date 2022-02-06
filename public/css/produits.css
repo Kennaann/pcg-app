@@ -88,7 +88,7 @@ a {
 
 
 .grid {
-    width: 50%;
+    width: 700px;
     margin:40px 0;
 
     display: grid;
@@ -97,10 +97,6 @@ a {
 }
 
 @media screen and (max-width: 1200px) {
-    .grid {
-        width: 60%;
-    }
-
     .titre {
         width: 100%;
     }
@@ -128,7 +124,7 @@ a {
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 650px) {
     .grid {
         width: 95%;
         grid-template-columns: repeat(1, 1fr);

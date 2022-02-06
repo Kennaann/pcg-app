@@ -76,7 +76,7 @@ header {
 .under-ul li {
     list-style: none;
     padding: 20px;
-    width: 100px;
+    min-width: 100px
 }
 
 .under-ul li > a {

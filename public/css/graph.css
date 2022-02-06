@@ -1,0 +1,21 @@
+.chart {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+}
+
+
+
+.recap-wrapper {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: 90px auto;
+}
+
+h2 {
+    font-size: 1.3rem;
+    font-weight: normal;
+    text-align: center;
+    margin: 1.5em 0; 
+}

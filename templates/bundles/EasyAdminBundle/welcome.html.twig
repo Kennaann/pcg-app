@@ -3,6 +3,11 @@
 
 
 {% block main %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('css/graph.css') }}" />
+{% endblock %}
+
 <h1>Bienvenue dans l'interface administration de votre site internet</h1>
 <p>
   C'est ici que vous allez pouvoir créer ou éditer vos produits, catégories etc. <br> 
@@ -13,52 +18,120 @@
   Si aucun produit n'est mis en vente dans votre site, votre page d'accueil sera vide.  
 </p>
 
-<div class="row">
 
-  <div class="col-sm-4 mt-3">
-    <div class="card">
-      <div class="card-header text-center">Avis</div>
+<div class="recap-wrapper">
+  <div class="card">
       <div class="card-body">
-        <h1 class="card-title display-6 text-center"> {{ nb_avis }} </h1>
+        {{ nb_commandes }} commandes
       </div>
     </div>
-  </div>
 
-  <div class="col-sm-4 mt-3">
     <div class="card">
-      <div class="card-header text-center">Produits</div>
       <div class="card-body">
-        <h1 class="card-title display-6 text-center"> {{ nb_produit }} </h1>
+        {{ nb_produit }} produits  en vente
       </div>
     </div>
-  </div>
 
-  <div class="col-sm-4 mt-3">
     <div class="card">
-      <div class="card-header text-center">Categories</div>
       <div class="card-body">
-        <h1 class="card-title display-6 text-center"> {{ nb_categorie }} </h1>
+        {{ nb_user }} utilisateurs inscrit sur le site
       </div>
     </div>
-  </div>
-
-  <div class="col-sm-4 mt-3">
-    <div class="card">
-      <div class="card-header text-center">Fournisseurs</div>
-      <div class="card-body">
-        <h1 class="card-title display-6 text-center"> {{ nb_fournisseur }} </h1>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-sm-4 mt-3">
-    <div class="card">
-      <div class="card-header text-center">Urilisateurs</div>
-      <div class="card-body">
-        <h1 class="card-title display-6 text-center"> {{ nb_user }} </h1>
-      </div>
-    </div>
-  </div>
-
 </div>
+
+<div class="chart">
+  {% if dates %}
+    <div class="chart-container">
+      <h2>Suivi des commandes</h2>
+      <canvas id="commandeChart" width="300" height="300"></canvas>
+    </div>
+  {% endif %}
+  
+  {% if produitsNoms %}
+    <div class="chart-container">
+      <h2>{{ limite }} Produits les plus commandés</h2>
+      <canvas id="produitChart" width="100" height="100"></canvas>
+    </div>
+  {% endif %}
+</div>
+
+{% block javascripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+{% if dates %}
+  <script>
+    let commande = document.getElementById('commandeChart')
+    let commandeGraph = new Chart(commande, {
+      type: 'line',
+      data: {
+          labels: {{ dates|raw }},
+          datasets: [{
+              label: 'Nombre de commandes',
+              data: {{ commandesCount|raw }},
+              backgroundColor: 'rgb(229, 190, 245)',
+              borderColor: 'rgb(174, 36, 227)'
+              
+          }]
+      },
+      options: {
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Date'
+            }
+          },
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Commandes'
+            },
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      }
+    })
+  </script>
+{% endif %}
+
+{% if produitsNoms %}
+  <script>
+    let produit = document.getElementById('produitChart')
+    let produitGraph = new Chart(produit,{
+      type: 'polarArea',
+      data: {
+        labels: {{ produitsNoms|raw }},
+        datasets: [{
+          label: 'Produits les plus commandés',
+          data: {{ quantites|raw }},
+          backgroundColor: [
+            'rgba(11, 149, 219, 0.4)',
+            'rgba(255, 178, 20, 0.4)',
+            'rgba(84, 228, 195, 0.4)',
+            'rgba(183, 42, 148, 0.4)',
+            'rgba(127, 90, 179, 0.4)'
+          ]
+        }] 
+      },
+      options: {
+        scales: {
+          r: {
+            ticks: {
+              stepSize: 1
+            }
+          }
+        }
+      }
+    })
+    
+  </script>
+{% endif %}
+
+
 {% endblock %}
+
+{% endblock %}
+

@@ -9,6 +9,7 @@ use App\Entity\Fournisseur;
 use App\Entity\User;
 use App\Repository\AvisRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\CommandeRepository;
 use App\Repository\FournisseurRepository;
 use App\Repository\ProduitRepository;
 use App\Repository\UserRepository;
@@ -21,18 +22,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
 {
-    private $avisRepository;
-    private $categorieRepository;
     private $produitRepository;
-    private $fournisseurRepository;
     private $userRepository;
+    private $commandeRepository;
 
-    public function __construct(AvisRepository $avisRepository, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, FournisseurRepository $fournisseurRepository, UserRepository $userRepository) {
-        $this->avisRepository = $avisRepository;
-        $this->categorieRepository = $categorieRepository;
+    public function __construct(ProduitRepository $produitRepository, UserRepository $userRepository, CommandeRepository $commandeRepository) {
         $this->produitRepository = $produitRepository;
-        $this->fournisseurRepository = $fournisseurRepository;
         $this->userRepository = $userRepository;
+        $this->commandeRepository = $commandeRepository;
     }
 
     /**
@@ -40,12 +37,71 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
+        // nombre de commandes par dates
+        $commandesByDate = $this->commandeRepository->countByDate();
+        // $commandesByDate = null;
+
+        if($commandesByDate) {
+            $dates = [];
+            $commandesCount = [];
+
+            // on sépare les données tel qu'attendu par chart.js
+            foreach($commandesByDate as $commande) {
+                $date = date('d/m/Y', strtotime($commande['dateCommande']));
+                $dates[] = $date;
+                $commandesCount[] = $commande['count'];
+            }
+        }
+    
+        // On récupère les produits déja commandés 
+        $produitsRaw = $this->produitRepository->getBuyedProduct();
+        // $produitsRaw = null;
+
+        if($produitsRaw) {
+            $produits = [];
+            $limit = 5;
+            
+            // Déconstruit mon tableau
+            foreach($produitsRaw as $produit) {
+                $produits[] = $produit['nom'];
+            }
+
+            // Tableau avec le Produit en clé et la quantitée en valeur, dans l'ordre decroissant par rapport à la valeur
+            $allProduitAndCount = array_count_values($produits);
+            arsort($allProduitAndCount);
+
+            // envoie toutes les données de mon tableau jusqu'a une certaine limite
+            if($allProduitAndCount < $limit) {
+                $produitAndCount = $allProduitAndCount;
+            } else {
+                // je récupère les 5 premieres valeures de mon tableau
+                $produitAndCount = array_slice($allProduitAndCount, 0, $limit);
+            }
+
+            $produitsNoms = [];
+            $quantites = [];
+
+            foreach($produitAndCount as $produit =>$quantitee) {
+                $produitsNoms[] = $produit;
+                $quantites[] = $quantitee;
+            }
+        }
+
+
         return $this->render('bundles/EasyAdminBundle/welcome.html.twig', [
-            'nb_avis' => count($this->avisRepository->findAll()),
-            'nb_categorie' => count($this->categorieRepository->findAll()),
-            'nb_produit' => count($this->produitRepository->findAll()),
-            'nb_fournisseur' => count($this->fournisseurRepository->findAll()),
-            'nb_user' => count($this->userRepository->findAll())
+            'nb_commandes' => $this->commandeRepository->countCommandes(),
+            'nb_produit' => $this->produitRepository->countProduits(),
+            'nb_user' => $this->userRepository->countUsers(), 
+
+            
+            // "if" condition sur une ligne : si il y a des commandes ou produits en vente j'envoie mes données vers la vue
+
+            'limite' => $produitsRaw ? $limit : null,
+            // Envoi mon tableau au format json
+            'dates' => $commandesByDate ? json_encode($dates) : null,
+            'commandesCount' => $commandesByDate ? json_encode($commandesCount) : null,
+            'produitsNoms' => $produitsRaw ? json_encode($produitsNoms) : null,
+            'quantites' => $produitsRaw ? json_encode($quantites) : null
         ]);
     }
 
@@ -57,8 +113,6 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        // yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         return [
             MenuItem::linkToDashboard('Dashboard', 'fa fa-dashboard'),
             MenuItem::linkToUrl('Site', 'fa fa-home', '/'),

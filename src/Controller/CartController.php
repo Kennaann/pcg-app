@@ -3,35 +3,41 @@
 namespace App\Controller;
 
 use Stripe\Stripe;
+use App\Entity\Commande;
 use Stripe\Checkout\Session;
 use App\Repository\ProduitRepository;
+use App\Repository\CommandeRepository;
+use DateTime;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CartController extends AbstractController
 {
 
     private $session;
 
-    public function __construct(SessionInterface $session)
+    public function __construct(SessionInterface $session, ProduitRepository $produitRepository)
     {
         $this->session = $session;
+        $this->produitRepository = $produitRepository;
     }
 
     #[Route('/panier', name: 'cart')]
-    public function index(ProduitRepository $produitRepository): Response
-    {
-
+    public function index(): Response
+    {   
         $panier = $this->session->get('panier', []);
         $panierWithData = [];
 
         foreach($panier as $id => $quantity) {
             $panierWithData[] = [
-                'product' => $produitRepository->find($id),
+                'product' => $this->produitRepository->find($id),
                 'quantity' => $quantity
             ];
         }
@@ -63,7 +69,7 @@ class CartController extends AbstractController
             $panier[$id]++;
         } else {
             $panier[$id] = 1;
-        }
+        } 
 
         $this->session->set('panier', $panier);
 
@@ -89,7 +95,7 @@ class CartController extends AbstractController
 
     
     #[Route('/paiement', name: 'checkout')]
-    public function checkout(ProduitRepository $produitRepository)
+    public function checkout()
     {
         // récupère le panier de la session
         $panier = $this->session->get('panier', []);
@@ -97,7 +103,7 @@ class CartController extends AbstractController
 
         foreach($panier as $id => $quantity) {
             $panierWithData[] = [
-                'product' => $produitRepository->find($id),
+                'product' => $this->produitRepository->find($id),
                 'quantity' => $quantity
             ];
         }
@@ -136,13 +142,29 @@ class CartController extends AbstractController
     }
     
     #[Route('/success', name: 'success_url')]
-    public function success()
+    public function success(EntityManagerInterface $em, Security $security, )
     {
         $panier = $this->session->get('panier', []);
 
         if(!empty($panier)) {
-            foreach($panier as $k => $item) {
-                unset($panier[$k]);
+
+            if($security->getUser() !== null) {
+                $commande = New Commande();
+                $commande->setUser($security->getUser());
+                $commande->setCreatedAt(new DateTimeImmutable());
+
+                // Récupère dans mon panier les produits à ajouter à mon object "commande"
+                foreach($panier as $id => $quantity) {
+                    $commande->addProduit($this->produitRepository->find($id));
+                }
+
+                $em->persist($commande);
+                $em->flush();
+            }
+
+            // Vide mon panier
+            foreach($panier as $id => $quantity) {
+                unset($panier[$id]);
             }
         }
 
@@ -153,14 +175,14 @@ class CartController extends AbstractController
     }
     
     #[Route('/cancel', name: 'cancel_url')]
-    public function cancel(ProduitRepository $produitRepository)
+    public function cancel()
     {
         $panier = $this->session->get('panier', []);
         $panierWithData = [];
 
         foreach($panier as $id => $quantity) {
             $panierWithData[] = [
-                'product' => $produitRepository->find($id),
+                'product' => $this->produitRepository->find($id),
                 'quantity' => $quantity
             ];
         }

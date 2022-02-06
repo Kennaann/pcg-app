@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/product-show.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/product-avis.css') }}" />
 {% endblock %}
 
 {% block title %} Produit-avis | PCG{% endblock %}
@@ -16,7 +16,7 @@
     {{ message }}
     </p>
     <a href="{{ path('cart') }}" class="flash-primary-button">Voir mon panier ></a>
-    <a href="{{ path('produits') }}"  class="flash-secondary-button">< Contiuer mes achats</a>
+    <a href=""  class="flash-secondary-button">< Continuer mes achats</a>
 </div>
 {% endfor %}
 

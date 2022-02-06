@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Produit;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -47,4 +48,24 @@ class ProduitRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function countProduits()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('count(p.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
+
+    public function getBuyedProduct() {
+        return $this->createQueryBuilder('p')
+            ->select('p.nom')
+            ->leftJoin('p.commandes', 'c', 'commande')
+            ->andWhere('c.id > 0')
+            ->orderBy('p.nom')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

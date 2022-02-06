@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Entity\Categorie;
+use App\Repository\CommandeRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Security;
 
 class MainController extends AbstractController
 {
@@ -24,6 +27,7 @@ class MainController extends AbstractController
     #[Route('/', name: 'home_page')]
     public function index(): Response
     {
+
         $categories = $this->em->getRepository(Categorie::class)->findAll();
         $session = $this->requestStack->getSession();
         $session->set('categories', $categories);
@@ -51,5 +55,24 @@ class MainController extends AbstractController
     public function about()
     {
         return $this->render('main/about.html.twig', []);
+    }
+    
+    #[Route('/commandes', name: 'commandes')]
+    public function commandes(Security $security)
+    {
+        //Récupère l'utilisateur connecté
+        $user = $security->getUser();
+
+        if($user) {
+            // Récupère la collection de commandes
+            $commandes = $user->getCommandes();
+        } else {
+            $commandes = null;
+        }
+        
+
+        return $this->render('user/commandes.html.twig', [
+            'commandes' => $commandes
+        ]);
     }
 }

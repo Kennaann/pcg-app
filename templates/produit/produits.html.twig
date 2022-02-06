@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/product.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/produits.css') }}" />
 {% endblock %}
 
 {% block title %} Produits | PCG{% endblock %}
@@ -16,7 +16,7 @@
             <article>
 
                 {% if categorie.image %}
-                    <img src="{{ asset('images/img-categories/' ~ categorie.image) }}" alt="image indisponible">
+                    <img src="{{ asset('images/img-categories/' ~ categorie.image) }}" alt="image de la catégorie">
                 {% else %}
                     <img src="{{ asset('images/img-categories/indisponible.png') }}" alt="image indisponible">
                 {% endif %}

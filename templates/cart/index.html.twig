@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/panier.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/cart.css') }}" />
 {% endblock %}
 
 
@@ -23,21 +23,21 @@
 
                     <div class="article-info">
                         <h2>{{ item.product.categorie.categorie }} - {{ item.product.nom }}</h2>
-                        <div class="article-description">
-                            {# "|raw" permet d'afficher les balises html contenues dans le texte #}
+                        {# <div class="article-description">
+                            {# "|raw" permet d'afficher les balises html contenues dans le texte 
                             <div>{{ item.product.description|raw }}</div>
                             <p>Fournisseur : {{ item.product.fournisseur.fournisseur }}</p>
 
                             <div class="description-overlay"></div>
-
+                        </div> #}
+                        <div class="article-price">
+                            <p>{{ item.product.prix }} €</p>
+                            <p>Qte: {{ item.quantity }}</p>
+                            <a href="{{ path('cart_remove', {id: item.product.id}) }}">Supprimer cet article</a>
                         </div>
                     </div>
                     
-                    <div class="article-price">
-                        <p>{{ item.product.prix }} €</p>
-                        <p>Qte: {{ item.quantity }}</p>
-                        <a href="{{ path('cart_remove', {id: item.product.id}) }}">Supprimer cet article</a>
-                    </div>
+                    
                 </div>
             {% endfor %}
         </div>

@@ -47,4 +47,12 @@ class FournisseurRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function countFournisseurs()
+    {
+        return $this->createQueryBuilder('f')
+        ->select('count(f.id)')
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
+    }
 }

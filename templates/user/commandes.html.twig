@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/commandes.css') }}" />
+{% endblock %}
+
+{% block title %}Panier | Mes commandes{% endblock %}
+
+{% block body %}
+
+<main>
+{% if commandes is not empty %}
+
+    {% for commande in commandes %}
+
+        <div class="commande-wrapper">
+            <h1>Commande du {{ commande.createdAt|date('d/m/Y')  }} :</h1>
+
+            <div class="produit-list">
+                {% for produit in commande.produit %}
+
+                    <div class="produit">
+                        <div class="produit-text">
+                            <h2>{{ produit.categorie }} - {{ produit.nom }}</h2>
+
+                            {# "|raw" permet d'afficher les balises html contenues dans le texte #}
+                            <p>
+                                {{ produit.description|raw }}
+                            </p>
+                            <p>Fournisseur : {{ produit.fournisseur.fournisseur }}</p>
+                            
+                            <div class="text-overlay"></div>
+                        </div>
+                        
+                        <img src="{{ asset('images/img-articles/' ~ produit.image) }}" alt="image du produit">
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+            
+    {% endfor %}
+
+{% elseif not app.user %}
+
+    <div class="commande-vide">
+        <h1>Connectez vous pour voir vos commandes</h1>
+        <a href="{{path('app_login')}}" class="button center">Connexion</a>
+    </div>
+
+{% else %}
+
+    <div class="commande-vide">
+        <h1>Vous n'avez pas encore de commandes</h1>
+        <a href="{{path('produits')}}" class="button center">Voir les produits</a>
+    </div>
+
+{% endif %}
+
+
+
+</main>
+
+{% endblock %}

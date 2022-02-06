@@ -70,10 +70,15 @@ class Produit
      */
     private $phare;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Commande::class, mappedBy="produit")
+     */
+    private $commandes;
 
     public function __construct()
     {
         $this->avis = new ArrayCollection();
+        $this->commande = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -207,4 +212,11 @@ class Produit
         return $this;
     }
 
+    /**
+     * @return Collection|Commande[]
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
 }

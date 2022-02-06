@@ -27,6 +27,7 @@ h1, h2 {
 /* articles du panier  */
 .panier-item {
     display: flex;
+    justify-content: space-between;
     height: fit-content;
     background-color: var(--article-background-color);
     padding: 20px;
@@ -43,6 +44,9 @@ h1, h2 {
 
 .article-info {
     margin: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .article-description {
@@ -141,4 +145,14 @@ h1, h2 {
         width: auto;
         margin: 25% 20px;
     }
+}
+
+@media screen and (max-width: 520px) {
+   .panier-item {
+       padding: 10px;
+   }
+
+   .article-info {
+       margin: 0;
+   }
 }

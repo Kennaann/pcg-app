@@ -67,6 +67,10 @@ svg {
     height: 100%;
 }
 
+.star-wrapper {
+    margin: 5px 0;
+}
+
 .note-wrapper {
     display: flex;
 }
@@ -113,7 +117,6 @@ h2 {
 .article-content div {
     font-weight: lighter;
     color: var(--secondary-text-color);
-    margin: 0;
     object-fit: cover;
 }
 
@@ -412,5 +415,10 @@ select {
 
     .avis {
         width: 90%;
+    }
+
+    form {
+        width: 90vw;
+        margin: 0;
     }
 }

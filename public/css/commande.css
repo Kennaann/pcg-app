@@ -1,0 +1,86 @@
+main {
+    width: 500px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 1.5em;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 1em;
+    font-weight: normal;
+    color: var(--main-text-color);
+}
+
+.produit{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+
+.produit img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin: auto;
+}
+
+.produit p, .produit ul, .produit div {
+    font-size: smaller;
+    color: var(--secondary-text-color);
+    margin: 5px 0;
+}
+
+.produit ul {  
+    padding: 0 10px;
+}
+
+.produit-text {
+    height: 90px;
+    overflow: hidden;
+    position: relative;
+}
+
+.text-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--background-color) 0%, rgba(42,42,42,0) 40%);
+    margin: 0!important;
+}
+
+.commande-wrapper {
+    margin: 50px 0 100px 0;
+}
+
+.commande-vide {
+    margin: 15% auto;
+    height: 40vh;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    text-decoration: none;
+    color: white;
+    padding: 15px 10px;
+    background-color: var(--main-color);
+    border-radius: 5px;
+    text-align: center;
+    border: none;
+}
+
+.button:hover {
+    background-color: #b852e0;
+}
+
+@media screen and (max-width:500px) {
+    main {
+        width: 98%;
+    }
+}
