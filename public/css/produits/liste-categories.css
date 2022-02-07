@@ -53,9 +53,12 @@ article {
     position: absolute;
     bottom: 0;
     right: 0;
+    width: -webkit-fill-available;
 }
 
-
+.article-text a {
+    padding: 0;
+}
 
 article img {
     cursor: pointer;
