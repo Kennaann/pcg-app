@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/produits/liste-categories.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/produits/liste-categorie.css') }}" />
 {% endblock %}
 
 {% block title %} Produits | PCG{% endblock %}
@@ -14,21 +14,21 @@
         <div class="grid">
             {% for categorie in categories %}
             <article>
+                <a href="{{ path('par_categories', {id: categorie.categorie|lower}) }}">
 
-                {% if categorie.image %}
-                    <img src="{{ asset('images/img-categories/' ~ categorie.image) }}" alt="image de la catégorie">
-                {% else %}
-                    <img src="{{ asset('images/img-categories/indisponible.png') }}" alt="image indisponible">
-                {% endif %}
-                
-                <div class="article-text">
-                    <h2>{{ categorie.categorie }}</h2>
-                    <span class="button">
-                        <a href="{{ path('par_categories', {id: categorie.categorie|lower}) }}">
-                            Voir les produits >
-                        </a>
-                    </span>
-                </div>
+                    {% if categorie.image %}
+                        <img src="{{ asset('images/img-categories/' ~ categorie.image) }}" alt="image de la catégorie">
+                    {% else %}
+                        <img src="{{ asset('images/img-categories/indisponible.png') }}" alt="image indisponible">
+                    {% endif %}
+                    
+                    <div class="article-text">
+                        <h2>{{ categorie.categorie }}</h2>
+                        <span class="button">
+                                Voir les produits >
+                        </span>
+                    </div>
+                </a>
             </article>
             {% endfor %}
         </div>

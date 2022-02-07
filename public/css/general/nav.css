@@ -50,7 +50,7 @@ header {
  /* Sous menu  */
 
 
-.under-ul {
+.under-ul, .user-ul {
     position: absolute;
     top: 100px;
     margin: 0;
@@ -61,6 +61,10 @@ header {
     display: none;
     transition-delay: .2s;
  }
+
+.user-ul {
+    right: -59px;
+}
 
  .under-overlay {
     position: absolute;
@@ -73,18 +77,20 @@ header {
     display: none;
  }
 
-.under-ul li {
+.under-ul li, 
+.user-ul li {
     list-style: none;
     padding: 20px;
     min-width: 100px
 }
 
-.under-ul li > a {
+.under-ul li > a,
+.user-ul li > a {
     text-decoration: none;
     color: var(--secondary-text-color);
 }
 
-.li-deroulant:hover > .under-ul {
+.li-deroulant:hover > .under-ul, .li-deroulant:hover > .user-ul {
     display: block;
 }
 
@@ -93,16 +99,18 @@ header {
     display: block;
 }
 
-.under-ul li:hover {
+.under-ul li:hover,
+.user-ul li:hover {
     background-color: #1b1b1b;
 }
 
-.under-ul li:hover > a {
+.under-ul li:hover > a,
+.user-ul li:hover > a{
     color: var(--main-text-color);
 }
 
 .user-wrap {
-    padding: 36px;
+    padding: 36px 0;
     display: flex;
     align-items: center;
 }
@@ -121,7 +129,7 @@ header {
 /*menu sur mobile*/
 
 .hamburger {
-    padding: 20px;
+    padding: 10px;
     cursor: pointer;
     display: none;
 }

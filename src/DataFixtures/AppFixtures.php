@@ -14,6 +14,12 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
 
+        $pcImages = ["pc1.jpg", "pc2.jpg", "pc3.jpg", "pc4.jpg"];
+        $ecranImages = ["ecran1.jpg", "ecran2.jpg", "ecran3.jpg", "ecran4.jpg"];
+        $clavierImages = ["clavier1.jpg", "clavier2.jpg", "clavier3.jpg", "clavier4.jpg", "clavier5.jpg"];
+        $sourisImages = ["souris1.jpg", "souris2.jpg", "souris3.jpg", "souris4.jpg", "souris5.jpg"];
+        $casqueImages = ["casque1.jpg", "casque2.jpg", "casque3.jpg", "casque4.jpg"];
+
         $div = 10**2; 
 
         $categorie_table = ["PC", "Ecran", "Clavier", "Souris", "Audio"];
@@ -42,26 +48,120 @@ class AppFixtures extends Fixture
         
 
         //fixtures des produits//
-        for($i = 1; $i <= 100; $i++) {
+
+        // 20 PC
+        for($i = 1; $i <= 20; $i++) {
             $k = $i - 1;
 
             $produit = new Produit();
 
-            $produit->setNom('Produit n°'.$i);
+            $produit->setNom('PC n°'.$i);
             $produit->setDescription('Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium');
-            $produit->setQuantitee(rand(0, 50));
-            $produit->setImage('default-product-image.png');
+            $produit->setQuantitee(rand(0, 10));
+            $produit->setImage($pcImages[array_rand($pcImages, 1)]);
 
-            //permet de recuperer une valeur random avec deux décimales
-            $produit->setPrix(mt_rand(10.00 * $div, 99.99 * $div) / $div);
+            // permet de recuperer une valeur random avec deux décimales
+            $produit->setPrix(mt_rand(500.00 * $div, 4999.99 * $div) / $div);
 
-            //recupère au hasard une valeur dans mes tableaux contenant les noms des categorie et des fournisseurs
-            $produit->setCategorie($categories[array_rand($categories, 1)]);
+            // Récupère l'index 1 du tableau catégorie 
+            $produit->setCategorie($categories[0]);
             $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
 
             $manager->persist($produit);
-            $manager->persist($categories[array_rand($categories, 1)]);
-            $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
+            // $manager->persist($categories[array_rand($categories, 1)]);
+            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
+        }
+
+        // 20 Ecran
+        for($i = 1; $i <= 20; $i++) {
+            $k = $i - 1;
+
+            $produit = new Produit();
+
+            $produit->setNom('Ecran n°'.$i);
+            $produit->setDescription('Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium');
+            $produit->setQuantitee(rand(0, 10));
+            $produit->setImage($ecranImages[array_rand($ecranImages, 1)]);
+
+            // permet de recuperer une valeur random avec deux décimales
+            $produit->setPrix(mt_rand(50.00 * $div, 499.99 * $div) / $div);
+
+            // Récupère l'index 2 du tableau catégorie 
+            $produit->setCategorie($categories[1]);
+            $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
+
+            $manager->persist($produit);
+            // $manager->persist($categories[array_rand($categories, 1)]);
+            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
+        }
+
+        // 20 Claviers
+        for($i = 1; $i <= 20; $i++) {
+            $k = $i - 1;
+
+            $produit = new Produit();
+
+            $produit->setNom('Clavier n°'.$i);
+            $produit->setDescription('Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium');
+            $produit->setQuantitee(rand(0, 10));
+            $produit->setImage($clavierImages[array_rand($clavierImages, 1)]);
+
+            // permet de recuperer une valeur random avec deux décimales
+            $produit->setPrix(mt_rand(50.00 * $div, 499.99 * $div) / $div);
+
+            // Récupère l'index 1 du tableau catégorie 
+            $produit->setCategorie($categories[2]);
+            $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
+
+            $manager->persist($produit);
+            // $manager->persist($categories[array_rand($categories, 1)]);
+            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
+        }
+
+        // 20 Souris
+        for($i = 1; $i <= 20; $i++) {
+            $k = $i - 1;
+
+            $produit = new Produit();
+
+            $produit->setNom('Souris n°'.$i);
+            $produit->setDescription('Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium');
+            $produit->setQuantitee(rand(0, 10));
+            $produit->setImage($sourisImages[array_rand($sourisImages, 1)]);
+
+            // permet de recuperer une valeur random avec deux décimales
+            $produit->setPrix(mt_rand(50.00 * $div, 499.99 * $div) / $div);
+
+            // Récupère l'index 2 du tableau catégorie 
+            $produit->setCategorie($categories[3]);
+            $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
+
+            $manager->persist($produit);
+            // $manager->persist($categories[array_rand($categories, 1)]);
+            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
+        }
+
+        // 20 Casques
+        for($i = 1; $i <= 20; $i++) {
+            $k = $i - 1;
+
+            $produit = new Produit();
+
+            $produit->setNom('Casque n°'.$i);
+            $produit->setDescription('Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium');
+            $produit->setQuantitee(rand(0, 10));
+            $produit->setImage($casqueImages[array_rand($casqueImages, 1)]);
+
+            // permet de recuperer une valeur random avec deux décimales
+            $produit->setPrix(mt_rand(20.00 * $div, 299.99 * $div) / $div);
+
+            // Récupère l'index 2 du tableau catégorie 
+            $produit->setCategorie($categories[4]);
+            $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
+
+            $manager->persist($produit);
+            // $manager->persist($categories[array_rand($categories, 1)]);
+            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
         }
 
         $manager->flush();

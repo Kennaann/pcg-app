@@ -29,7 +29,7 @@ body {
 }
 
 .panier {
-    padding-right: 25px;
+    padding-right: 20px;
 }
 
 /*footer*/
@@ -96,6 +96,11 @@ footer {
     .footer-li {
         padding: 15px;
     }
+
+    .panier {
+        padding-right: 10px;
+    }
+    
 
 }
 

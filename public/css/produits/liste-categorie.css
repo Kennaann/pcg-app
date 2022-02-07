@@ -82,12 +82,10 @@ article:hover img {
     font-weight: normal
 }
 
-a {
-    text-decoration: none;
-    color: var(--main-color);
-    padding: 10px;
+.article-text h2 {
+    color: var(--main-text-color);
+    font-size: 1.3rem;
 }
-
 
 
 .grid {

@@ -71,7 +71,7 @@ class ProduitController extends AbstractController
             'produits' => $produits,
             'fournisseurs' => $fournisseurs,
             'categorie_id' => $id, 
-            'filter_prix' => 50
+            'filter_prix' => 20
         ]);
     }
 

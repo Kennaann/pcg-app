@@ -374,6 +374,7 @@ select {
     z-index: 1;
     padding: 20px;
     border-radius: 5px;
+    min-width: 300px;
 }
 
 .not-user-pop-up img {

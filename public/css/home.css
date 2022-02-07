@@ -1,5 +1,7 @@
 section img {
     width: 100%;
+    max-height: 100vh;
+    object-fit: cover;
 }
 
 article {
@@ -85,7 +87,7 @@ article a:focus {
     }
 
     section {
-        margin-bottom: 100px;
+        margin: 50px 0;    
     }
 
     article {
@@ -94,14 +96,17 @@ article a:focus {
 
     article > h1, h2, p {
         margin: 5px 5px;
+        font-size: 1.2rem;
     }
     
     article a {
         margin: 5px;
+        padding: 10px;
+        width: auto;
     }
 
     .description {
-        margin: 0 5px;
+        margin: 10px 5px;
     }
 
     .produit-phare img {
