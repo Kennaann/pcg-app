@@ -20,7 +20,7 @@ class CategorieCrudController extends AbstractCrudController
         return [
             Field::new('categorie'),
             ImageField::new('image')
-                ->setUploadDir('public\images\img-categories')
+                ->setUploadDir('public/images/img-categories')
                 ->setBasePath('images/img-categories')
         ];
     }

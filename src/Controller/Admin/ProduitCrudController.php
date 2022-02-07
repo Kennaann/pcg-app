@@ -30,7 +30,7 @@ class ProduitCrudController extends AbstractCrudController
             AssociationField::new('categorie'),
             AssociationField::new('fournisseur'),
             ImageField::new('image')
-                ->setUploadDir('public\images\img-articles')
+                ->setUploadDir('public/images/img-articles')
                 ->setBasePath('images/img-articles'),
             Field::new('phare')
         ];
