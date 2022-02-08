@@ -22,13 +22,12 @@
 
                     <div class="produit">
                         <div class="produit-text">
-                            <h2>{{ produit.categorie }} - {{ produit.nom }}</h2>
+                            <h2>{{ produit.nom }}</h2>
 
                             {# "|raw" permet d'afficher les balises html contenues dans le texte #}
                             <p>
                                 {{ produit.description|raw }}
                             </p>
-                            <p>Fournisseur : {{ produit.fournisseur.fournisseur }}</p>
                             
                             <div class="text-overlay"></div>
                         </div>

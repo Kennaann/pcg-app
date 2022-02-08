@@ -143,7 +143,7 @@
             <article>
                 <a href="{{ path('product_show', {id: produit.nom, categorie: categorie_id}) }}" class="article-link">
                     <img class="article-img" src="{{ asset('images/img-articles/' ~ produit.image) }}" alt="image indisponible">
-                    <h2>{{ produit.categorie.categorie }} - {{ produit.nom }}</h2>
+                    <h2>{{ produit.nom }}</h2>
                 </a>
 
                 {# si mon tableau est vide alors il n'ya pas laffichage ni le calcul de la moyenne  #}

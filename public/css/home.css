@@ -1,3 +1,7 @@
+main {
+    min-height: 70vh;
+}
+
 section img {
     width: 100%;
     max-height: 100vh;
@@ -113,5 +117,4 @@ article a:focus {
         width: -webkit-fill-available;
         margin: 0 5px;
     }
-
 }
