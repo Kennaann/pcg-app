@@ -23,6 +23,7 @@ class AppFixtures extends Fixture
         $div = 10**2; 
 
         $categorie_table = ["PC", "Ecran", "Clavier", "Souris", "Audio"];
+        $categories_img = ["pc1.jpg", "ecran1.jpg", "clavier1.jpg", "souris1.jpg", "casque2.jpg"];
         $categories = [];
 
         $fournisseur_table = ["PCG", "Logitech", "Razer", "MSI", "SteelSeries"];
@@ -33,6 +34,7 @@ class AppFixtures extends Fixture
         for($i = 0; $i < sizeof($categorie_table); $i++) {
             $categorie = new Categorie();
             $categorie->setCategorie($categorie_table[$i]);
+
             array_push($categories, $categorie);
             $manager->persist($categorie);
         }
@@ -68,8 +70,6 @@ class AppFixtures extends Fixture
             $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
 
             $manager->persist($produit);
-            // $manager->persist($categories[array_rand($categories, 1)]);
-            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
         }
 
         // 20 Ecran
@@ -91,8 +91,6 @@ class AppFixtures extends Fixture
             $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
 
             $manager->persist($produit);
-            // $manager->persist($categories[array_rand($categories, 1)]);
-            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
         }
 
         // 20 Claviers
@@ -113,9 +111,6 @@ class AppFixtures extends Fixture
             $produit->setCategorie($categories[2]);
             $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
 
-            $manager->persist($produit);
-            // $manager->persist($categories[array_rand($categories, 1)]);
-            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
         }
 
         // 20 Souris
@@ -137,8 +132,6 @@ class AppFixtures extends Fixture
             $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
 
             $manager->persist($produit);
-            // $manager->persist($categories[array_rand($categories, 1)]);
-            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
         }
 
         // 20 Casques
@@ -160,8 +153,6 @@ class AppFixtures extends Fixture
             $produit->setFournisseur($fournisseurs[array_rand($fournisseurs, 1)]);
 
             $manager->persist($produit);
-            // $manager->persist($categories[array_rand($categories, 1)]);
-            // $manager->persist($fournisseurs[array_rand($fournisseurs, 1)]);
         }
 
         $manager->flush();
