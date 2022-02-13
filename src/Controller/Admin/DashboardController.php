@@ -63,7 +63,7 @@ class DashboardController extends AbstractDashboardController
             
             // Déconstruit mon tableau
             foreach($produitsRaw as $produit) {
-                $produits[] = $produit['nom'];
+                $produits[] = $produit->getNom();
             }
 
             // Tableau avec le Produit en clé et la quantitée en valeur, dans l'ordre decroissant par rapport à la valeur

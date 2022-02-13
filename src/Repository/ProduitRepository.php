@@ -60,7 +60,7 @@ class ProduitRepository extends ServiceEntityRepository
 
     public function getBuyedProduct() {
         return $this->createQueryBuilder('p')
-            ->select('p.nom')
+            ->select('p')
             ->leftJoin('p.commandes', 'c', 'commande')
             ->andWhere('c.id > 0')
             ->orderBy('p.nom')

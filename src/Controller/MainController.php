@@ -32,12 +32,14 @@ class MainController extends AbstractController
         $session = $this->requestStack->getSession();
         $session->set('categories', $categories);
 
+        $produitRepo = $this->em->getRepository(Produit::class);
+
         // Il ne peut y avoir qu'un seul produit "phare". 
         // Si il y n'y en a aucun, le premier article de la table produit sera affiché. 
         // Si il y a plusieurs produits "phare", le premier produit par ordre d'ID sera affiché.
         // Si aucun produit n'est mis en vente dans votre site, votre page d'accueil sera vide.  
-
-        $produitPhare = $this->em->getRepository(Produit::class)->findBy(array("phare" => true));
+        
+        $produitPhare = $produitRepo->findBy(array("phare" => true));
         $defaultProduit = $this->em->getRepository(Produit::class)->findAll()[0];
 
         if($produitPhare) {
@@ -46,8 +48,20 @@ class MainController extends AbstractController
             $produitPhare = $defaultProduit;
         }
 
+        // je récupère les produits déja vendu
+        $produitsVendus = $produitRepo->getBuyedProduct();
+        $limit = 5;
+
+        // Je récupère le produit le plus vendu
+        $bestSelling = $produitsVendus[0];
+
+        // Je vais afficher le reste du tableau, 5 produits max (5 étant la valeur de ma variable "limit")
+        $produitsPopulaires = array_slice($produitsVendus, 1, $limit);
+
         return $this->render('main/index.html.twig', [
-            'produit_phare' => $produitPhare
+            'produit_phare' => $produitPhare,
+            'bestSelling' => $bestSelling,
+            'produitsPopulaires' => $produitsPopulaires
         ]);
     }
     

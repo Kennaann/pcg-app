@@ -1,0 +1,171 @@
+main {
+    min-height: 70vh;
+}
+
+h1, h2 {
+    font-weight: lighter;
+    font-size: 2em;
+    width: fit-content;
+    margin: 40px auto;
+}
+
+section {
+    margin-bottom: 100px;
+}
+
+/* message de bievenue */
+
+.img-text {
+    display: flex;
+    margin: 10px;
+}
+
+.welcome img {
+    width: 55%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.welcome-text {
+    width: 30%;
+    margin: auto;
+}
+
+.welcome-text p {
+    line-height: 1.5;
+}
+
+a, 
+a:hover {
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+
+/* produit phare  */
+.produit-phare .img-text {
+    flex-direction: row-reverse;
+}
+
+.produit-phare-txt {
+    width: 30%;
+    margin: auto;
+}
+
+.produit-phare img {
+    width: 55%;
+    max-height: 100vh;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.description {
+    margin: 10px 0;
+    color: var(--secondary-text-color);
+}
+.no-product {
+    width: fit-content;
+    margin: auto;
+    margin-top: 25%;
+    margin-bottom: 25%;
+}
+
+/* carousel produits */
+
+.plus-vendus {
+    width: 60vw;
+    margin: auto;
+}
+
+.carousel-img {
+    height: 40vw;
+    object-fit: cover;
+    position: relative;
+    border-radius: 10px;
+}
+
+.carousel-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(14, 14, 14, 0.8) 0%, transparent 77%);
+    border-radius: 10px;
+}
+
+
+
+@media screen and (max-width: 850px) {
+    .welcome {
+        margin-top: 50px;
+    }
+
+    .welcome img {
+        width: 40%;
+    }
+    
+    .welcome-text {
+        width: 50%;
+    }
+
+    .produit-phare img {
+        width: 100%;
+        object-fit: cover;
+        margin-bottom: 20px;
+    }
+
+    .produit-phare-txt {
+        width: 100%;
+    }
+
+    .description {
+        width: 400px;
+    }
+
+    .produit-phare .img-text {
+        flex-direction: column;
+    }
+
+    .carousel-img {
+        height: 60vw;
+    }
+
+    .plus-vendus {
+        width: auto;
+        margin: 0 10px;
+    }
+
+
+}
+
+@media screen and (max-width: 650px) {
+
+    section {
+        margin-bottom: 80px;
+    }
+
+    .welcome .img-text {
+        position: relative;
+    }
+
+    .welcome img {
+        width: 100%;
+    }
+
+    .welcome-text {
+        width: 400px;
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    h1, h2 {
+        font-size: 1.5rem;
+    }
+}

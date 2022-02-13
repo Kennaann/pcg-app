@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('css/home.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/homepage.css') }}" />
+
 {% endblock %}
 
 {% block title %}Accueil | PCG{% endblock %}
@@ -10,27 +12,77 @@
 {% block body %}
 
 <main>
-    {% if produit_phare %}
-    <section class="produit-phare">
-        <img src="{{ asset('images/img-articles/' ~ produit_phare.image) }}" alt="mon produit phare" class="produit-phare-img"> 
-        <article class="produit-phare-txt">
-            <h1>{{ produit_phare.nom }}</h1>
-            <div class="description">
-                {# "|raw" permet d'afficher les balises html contenues dans le texte #}
-                {{ produit_phare.description|raw }}
-            </div>
-            <h2> {{ produit_phare.prix }} €</h2>
-            <a href="{{ path('product_show', {id:produit_phare.nom, categorie: produit_phare.categorie.categorie|lower}) }}">Consulter</a>
-        </article>
+
+    <section class="welcome">
+        <h1>Bienvenue sur mon site !</h1>
+        <div class="img-text">
+            <img src="{{ asset('images/streaming.jpg') }}" alt="image intérieur pc">
+            <div class="overlay"></div>
+            <div class="welcome-text">
+                <p>Vous trouverez sur ce site différents produits mise en vente en rapport avec le jeu vidéo comme des PC, des écran etc. N'hésitez pas a naviguer sur le site comme sur n'importe quel site e-commerce. Le site est rempli de fausses données et le système de paiement est en mode test.</p>
+                <a href="{{ path('produits') }}">Voir les produits ></a>
+            </div>            
+        </div>
     </section>
-    {% else %}
-    <div class="no-product">
-        <h1>Aucun produit à afficher !</h1>
-        <p>
-            Il vous faut au moins un produit en vente qui  puisse être affiché en page d'accueil
-        </p>
-    </div>  
+
+ 
+    {% if produit_phare %}
+    
+    <section class="produit-phare">
+    <h2>Produit phare</h2>
+
+        <div class="img-text">
+            <img src="{{ asset('images/img-articles/' ~ produit_phare.image) }}" alt="mon produit phare" class="produit-phare-img"> 
+            <article class="produit-phare-txt">
+                <h3>{{ produit_phare.nom }}</h3>
+                <div class="description">
+                    {# "|raw" permet d'afficher les balises html contenues dans le texte #}
+                    {{ produit_phare.description|raw }}
+                </div>
+                <h4> {{ produit_phare.prix }} €</h4>
+                <a href="{{ path('product_show', {id:produit_phare.nom, categorie: produit_phare.categorie.categorie|lower}) }}">Voir l'article ></a>
+            </article>
+        </div>
+    </section>
     {% endif %}
+
+    <section class="plus-vendus">
+        <h2>Produits populaires</h2>
+        
+        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{ asset('images/img-articles/' ~ bestSelling.image) }}" class="d-block w-100 carousel-img" alt="{{ bestSelling.nom }}">
+                    <div class="carousel-overlay"></div>
+                    <div class="carousel-caption  d-md-block">
+                            <h5>{{ bestSelling.nom }}</h5>
+                            <a href="{{ path('product_show', {id:bestSelling.nom, categorie: bestSelling.categorie.categorie|lower}) }}">Voir l'article ></a>
+                    </div>
+                </div>
+                {% for produit in produitsPopulaires %}
+                    <div class="carousel-item">
+                        <img src="{{ asset('images/img-articles/' ~ produit.image) }}" class="d-block w-100 carousel-img" alt="{{ produit.nom }}">
+                        <div class="carousel-overlay"></div>
+                        <div class="carousel-caption  d-md-block">
+                            <h5>{{ produit.nom }}</h5>
+                            <a href="{{ path('product_show', {id:produit.nom, categorie: produit.categorie.categorie|lower}) }}">Voir l'article ></a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Precédent</span>
+            </button>
+
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Suivant</span>
+            </button>
+        </div>
+    </section>
     
 </main>
 
