@@ -151,7 +151,7 @@ a:hover {
     }
 
     .welcome-text {
-        width: 400px;
+        width: 300px;
         position: absolute;
         inset: 0;
         display: flex;
