@@ -17,18 +17,21 @@ section {
 
 .img-text {
     display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 10px;
 }
 
 .welcome img {
     width: 55%;
+    max-width: 550px;
     border-radius: 10px;
+    margin-right: 100px;
     object-fit: cover;
 }
 
 .welcome-text {
     width: 30%;
-    margin: auto;
 }
 
 .welcome-text p {
@@ -49,11 +52,12 @@ a:hover {
 
 .produit-phare-txt {
     width: 30%;
-    margin: auto;
 }
 
 .produit-phare img {
     width: 55%;
+    max-width: 550px;
+    margin-left: 100px;
     max-height: 100vh;
     object-fit: cover;
     border-radius: 10px;
@@ -100,15 +104,18 @@ a:hover {
 
     .welcome img {
         width: 40%;
+        margin-right: initial;
     }
     
     .welcome-text {
         width: 50%;
+        margin: auto;
     }
 
     .produit-phare img {
         width: 100%;
-        object-fit: cover;
+        max-width: initial;
+        margin-left: initial;
         margin-bottom: 20px;
     }
 
@@ -118,6 +125,7 @@ a:hover {
 
     .description {
         width: 400px;
+        max-width: fit-content;
     }
 
     .produit-phare .img-text {
@@ -157,6 +165,7 @@ a:hover {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        font-size: smaller;
     }
 
     .overlay {

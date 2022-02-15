@@ -81,7 +81,7 @@ header {
 .user-ul li {
     list-style: none;
     padding: 20px;
-    min-width: 145px
+    min-width: 100px !important;
 }
 
 .under-ul li > a,
